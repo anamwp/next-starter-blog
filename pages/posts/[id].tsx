@@ -7,18 +7,23 @@ import {
 import {Article} from '@components/Article';
 import type {Post} from '../index';
 import Link from 'next/link';
-
+import Head from 'next/head'
 export default function BlogPost({
     post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+    const {title, body} = post
     return (
         <>
         <Article>
+            <Head>
+                <title>{title}</title>
+                <meta property="og:title" content={title}/>
+            </Head>
             <h2>
                 <Link href="/">Back</Link>
             </h2>
-            <h3>Post title: {post.title}</h3>
-            <p>{post.body}</p>
+            <h3>Post title: {title}</h3>
+            <p>{body}</p>
         </Article>
         </>
     )
