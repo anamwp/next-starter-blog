@@ -1,9 +1,15 @@
 import React from 'react'
-import {GetStaticPropsContext, GetStaticPaths, InferGetStaticPropsType} from 'next'
+import {
+    GetStaticPropsContext, 
+    InferGetStaticPropsType,
+    GetStaticPaths, 
+} from 'next'
 import {Article} from '@components/Article';
 import type {Post} from '../index';
 
-export default function BlogPost({post}: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function BlogPost({
+    post,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <Article>
             <h2>Post title: {post.title}</h2>
@@ -24,14 +30,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 }
 
-export const getStaticProps = async (content: GetStaticPropsContext) => {
-    const {params} = content;
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+    const {params} = context;
 
     const emptyPost: Post = {
-        userId: 0,
-        id: 0,
         title: "title not found",
-        body: ""
+        body: "",
+        id: 0,
+        userId: 0,
     };
     if(!params?.id){
         return {
@@ -42,10 +48,10 @@ export const getStaticProps = async (content: GetStaticPropsContext) => {
     }
 
     const res = await fetch(`http://jsonplaceholder.typicode.com/posts/${params.id}`);
-    const post: Post[] = await res.json();
+    const post: Post = await res.json();
     return {
         props: {
-            post
-        }
-    }
+          post,
+        },
+      };
 }
