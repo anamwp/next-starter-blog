@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import {InferGetStaticPropsType} from "next"
+import Link from 'next/link'
 // import styles from '../styles/Home.module.css'
 import styled from '@emotion/styled'
 
@@ -45,7 +46,6 @@ const PostTitle = styled.h3`
 
 const title: string = 'Next with TypeScript';
 export default function Home({posts}: InferGetStaticPropsType<typeof getStaticProps>) {
-    console.log(posts);
   return (
     <Container>
       <Head>
@@ -58,9 +58,11 @@ export default function Home({posts}: InferGetStaticPropsType<typeof getStaticPr
             <List>
                 {
                     posts.map( post => (
-                        <ListItem key={post.id}>
-                            <PostTitle>{post.title}</PostTitle>
-                        </ListItem>
+                        <Link href="/posts/[id]" as={`/posts/${post.id}`}>
+                            <ListItem key={post.id}>
+                                <PostTitle>{post.title}</PostTitle>
+                            </ListItem>
+                        </Link>
                     ) )
                 }
             </List>

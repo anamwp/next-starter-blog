@@ -6,15 +6,21 @@ import {
 } from 'next'
 import {Article} from '@components/Article';
 import type {Post} from '../index';
+import Link from 'next/link';
 
 export default function BlogPost({
     post,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
+        <>
         <Article>
-            <h2>Post title: {post.title}</h2>
+            <h2>
+                <Link href="/">Back</Link>
+            </h2>
+            <h3>Post title: {post.title}</h3>
             <p>{post.body}</p>
         </Article>
+        </>
     )
 }
 
